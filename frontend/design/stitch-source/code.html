@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>SIX-AXIS IMU LAB 六轴姿态遥测工作台</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-container": "#bdffdb", "primary-fixed": "#dbe1ff", "outline": "#737686", "primary": "#004ac6", "surface-variant": "#d3e4fe", "on-error-container": "#93000a", "tertiary-fixed": "#6ffbbe", "surface": "#f8f9ff", "on-error": "#ffffff", "surface-tint": "#0053db", "background": "#f8f9ff", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#4edea3", "on-background": "#0b1c30", "primary-container": "#2563eb", "on-primary-fixed": "#00174b", "surface-bright": "#f8f9ff", "inverse-surface": "#213145", "surface-dim": "#cbdbf5", "error-container": "#ffdad6", "surface-container-high": "#dce9ff", "inverse-primary": "#b4c5ff", "secondary-container": "#dae2fd", "on-tertiary-fixed": "#002113", "on-primary-fixed-variant": "#003ea8", "on-surface-variant": "#434655", "on-primary-container": "#eeefff", "on-tertiary-fixed-variant": "#005236", "on-surface": "#0b1c30", "secondary-fixed": "#dae2fd", "tertiary-container": "#007d55", "on-tertiary": "#ffffff", "on-secondary-fixed-variant": "#3f465c", "on-secondary-fixed": "#131b2e", "surface-container-lowest": "#ffffff", "error": "#ba1a1a", "on-primary": "#ffffff", "secondary-fixed-dim": "#bec6e0", "on-secondary-container": "#5c647a", "surface-container-low": "#eff4ff", "tertiary": "#006242", "secondary": "#565e74", "surface-container": "#e5eeff", "primary-fixed-dim": "#b4c5ff", "inverse-on-surface": "#eaf1ff", "surface-container-highest": "#d3e4fe", "outline-variant": "#c3c6d7" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter-desktop": "1rem", "space-sm": "0.5rem", "space-md": "0.75rem", "gutter": "0.75rem", "space-xs": "0.25rem", "space-lg": "1rem", "space-xl": "1.5rem", "margin-desktop": "1.5rem", "margin": "1rem" }, "fontFamily": { "telemetry-display-xl": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Space Grotesk" ], "body-sm": [ "Inter" ], "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "telemetry-display-lg": [ "JetBrains Mono" ], "body-md": [ "Inter" ], "headline-xl": [ "Space Grotesk" ], "label-sm": [ "Inter" ], "label-caps": [ "JetBrains Mono" ], "telemetry-readout": [ "JetBrains Mono" ], "body-lg": [ "Inter" ] }, "fontSize": { "telemetry-display-xl": [ "36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "headline-xl-mobile": [ "26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-sm": [ "11px", { "lineHeight": "16px", "fontWeight": "400" } ], "headline-lg": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-md": [ "18px", { "lineHeight": "24px", "fontWeight": "500" } ], "telemetry-display-lg": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-md": [ "13px", { "lineHeight": "18px", "fontWeight": "400" } ], "headline-xl": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "label-caps": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" } ], "telemetry-readout": [ "14px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-lg": [ "15px", { "lineHeight": "22px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin-desktop flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl flex-shrink-0"><div class="flex items-center gap-space-md"><div class="w-9 h-9 rounded bg-surface-container-low flex items-center justify-center text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"><span class="material-symbols-outlined text-[22px]">precision_manufacturing</span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md tracking-tight text-on-surface uppercase">SIX-AXIS IMU LAB</span><span class="px-space-xs py-0.5 rounded bg-surface-container font-label-caps text-label-caps text-primary tracking-widest">v2.4-PRO</span></div><span class="font-label-caps text-label-caps text-on-surface-variant tracking-wider">六轴姿态遥测工作台 · TELEMETRY CONSOLE</span></div></div><div class="h-6 w-[1px] bg-outline-variant/40 hidden xl:block"></div><nav class="flex items-center gap-space-xs" data-active-classes="bg-surface-container-low text-primary font-semibold shadow-[inset_0_-2px_0_0_#2563eb]"><a aria-current="page" class="px-space-lg py-space-sm rounded-t transition-colors tracking-tight bg-surface-container-low text-primary font-semibold shadow-[inset_0_-2px_0_0_#2563eb]" data-path="real-time-monitoring" href="#">实时监测</a><a class="px-space-lg py-space-sm rounded-t text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md tracking-tight" data-path="history-steps" href="#">历史步数</a><a class="px-space-lg py-space-sm rounded-t text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md tracking-tight" data-path="my-devices" href="#">我的设备</a><a class="px-space-lg py-space-sm rounded-t text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md tracking-tight" data-path="user-profile" href="#">个人资料</a></nav></div><div class="flex items-center gap-space-md flex-shrink-0"><div class="hidden md:flex items-center gap-space-xs px-space-md py-1.5 rounded bg-surface-container-low shadow-[inset_0_1px_2px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed-dim opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-caps text-label-caps text-on-surface-variant">运行模式:</span><span class="font-telemetry-readout text-telemetry-readout text-on-surface font-semibold">真实采集模式</span><span class="font-label-sm text-label-sm text-outline mx-0.5">/</span><button class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" type="button">切至演示</button></div><div class="hidden lg:flex items-center gap-space-xs px-space-md py-1.5 rounded bg-surface-container-low shadow-[inset_0_1px_2px_rgba(15,23,42,0.04)]"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-on-surface-variant">轮询节拍</span><span class="font-telemetry-readout text-telemetry-readout text-on-surface">1.0s</span><span class="w-1 h-1 rounded-full bg-outline-variant"></span><span class="font-body-sm text-body-sm text-tertiary font-medium">数据源正常</span></div><div class="h-6 w-[1px] bg-outline-variant/40 hidden sm:block"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col items-end hidden sm:flex"><span class="font-telemetry-readout text-telemetry-readout text-on-surface font-semibold tracking-tight">LabUser_01</span><span class="font-label-caps text-label-caps text-on-surface-variant">CHIEF ANALYST</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="relative group"><button aria-label="账户操作" class="w-7 h-7 rounded flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">expand_more</span></button><div class="absolute right-0 top-full mt-2 w-44 py-space-xs rounded-lg bg-surface-container-lowest shadow-[0_4px_12px_rgba(15,23,42,0.08)] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50 flex flex-col"><div class="px-space-md py-space-xs font-label-caps text-label-caps text-outline">控制台授权</div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="user-profile" href="#"><span class="material-symbols-outlined text-[16px]">account_box</span>个人资料</a><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="my-devices" href="#"><span class="material-symbols-outlined text-[16px]">sensors</span>硬件通道</a><div class="my-1 h-[1px] bg-surface-container-high"></div><a class="flex items-center gap-space-sm px-space-md py-space-sm font-body-md text-body-md text-error hover:bg-error-container hover:text-on-error-container transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[16px]">logout</span>安全退出</a></div></div></div></div></div></header><main class="w-full pt-16 bg-background min-h-[calc(100vh-56px)]"><div class="flex flex-col w-full">
+<!-- 主工作台画布区 -->
+<div class="w-full px-margin-desktop py-space-md flex flex-col gap-space-lg max-w-[1720px] mx-auto">
+<!-- 1. 顶层设备控制与状态栏 (Device Bar & Telemetry Status) -->
+<header class="w-full bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- 设备选择与核心状态 -->
+<div class="flex flex-wrap items-center gap-space-md">
+<!-- 设备选择框 -->
+<div class="relative flex items-center bg-surface-container-low rounded px-space-md py-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-primary mr-space-xs">memory</span>
+<div class="flex flex-col pr-space-lg">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TARGET SENSOR UNIT</span>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-[14px] text-on-surface font-semibold tracking-tight">六轴高精实验标定仪 A01</span>
+<span class="font-telemetry-readout text-[11px] text-on-surface-variant font-normal">(dev_imu_9842f)</span>
+</div>
+</div>
+<button aria-label="切换设备" class="absolute right-1 w-6 h-6 flex items-center justify-center text-outline hover:text-on-surface" type="button">
+<span class="material-symbols-outlined text-[18px]">unfold_more</span>
+</button>
+</div>
+<!-- 刷新按钮 -->
+<button class="h-9 w-9 bg-surface-container-low rounded flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors shadow-sm" title="刷新设备状态" type="button">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<!-- 遥测就绪状态徽章 -->
+<div class="flex items-center gap-space-xs px-space-md py-1.5 bg-surface-container-low rounded">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary shadow-[0_0_8px_#10B981]"></span>
+</span>
+<span class="font-body-md text-body-md font-semibold text-tertiary">近期有上报 (Online)</span>
+<span class="mx-1 text-outline-variant font-light">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">RX:</span>
+<span class="font-telemetry-readout text-body-sm text-on-surface font-medium tabular-nums">2026-10-14 15:42:19.820 (UTC+8)</span>
+</div>
+<!-- 节拍与缓存参数 -->
+<div class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-label-caps text-label-caps px-space-sm py-1 bg-surface-container/60 rounded">
+<span class="material-symbols-outlined text-[14px] text-primary">av_timer</span>
+<span>HTTP 轮询 1.0s</span>
+<span class="text-outline-variant">•</span>
+<span>缓存保留 5min</span>
+</div>
+</div>
+<!-- 右侧快捷功能 -->
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<!-- 演示数据注入切换 -->
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-1.5 rounded">
+<span class="font-label-caps text-label-caps text-on-surface-variant">演示数据流注入</span>
+<button aria-checked="false" class="w-8 h-[18px] bg-secondary-container rounded-full relative transition-colors focus:outline-none" id="demo-toggle" role="switch" type="button">
+<span class="absolute left-0.5 top-0.5 bg-surface-container-lowest w-3.5 h-3.5 rounded-full shadow-sm transition-transform" id="demo-knob"></span>
+</button>
+</div>
+<!-- 步数历史入口 -->
+<a class="flex items-center gap-space-xs px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary rounded text-body-md font-medium transition-colors shadow-sm" data-path="history-steps" href="#">
+<span class="material-symbols-outlined text-[18px]">footprint</span>
+<span>步数历史看板</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</header>
+<!-- 2. 核心上半区：左右双子仪器台 -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- 左侧：3D 姿态视口仪器箱 (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm flex flex-col">
+<!-- 视口标题条 -->
+<div class="h-10 px-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-headline-md text-[13px] uppercase tracking-wider font-semibold text-on-surface">3D 实时姿态物理拟合 · ATTITUDE VIEWPORT</span>
+</div>
+<!-- 悬浮微型工具条 -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-1.5 py-0.5 rounded shadow-sm">
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" id="btn-reset-view" title="重置视角 (0,0,0)" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+</button>
+<button class="w-6 h-6 flex items-center justify-center text-primary hover:text-primary transition-colors" id="btn-toggle-grid" title="切换辅助坐标平面" type="button">
+<span class="material-symbols-outlined text-[16px]">grid_4x4</span>
+</button>
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" id="btn-toggle-proj" title="透视 / 正交切换" type="button">
+<span class="material-symbols-outlined text-[16px]">view_in_ar</span>
+</button>
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" id="btn-zoom-in" title="放大" type="button">
+<span class="material-symbols-outlined text-[16px]">zoom_in</span>
+</button>
+</div>
+</div>
+<!-- 3D 渲染舞台主体 (磨砂金属仪器台视觉) -->
+<div class="relative w-full h-[330px] bg-gradient-to-b from-surface-container-low via-surface-container to-surface-container-high flex items-center justify-center overflow-hidden [perspective:900px] select-none">
+<!-- 背景网格坐标刻度 (SVG) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="30" id="grid-pattern" patternunits="userSpaceOnUse" width="30">
+<path d="M 30 0 L 0 0 0 30" fill="none" stroke="#94A3B8" stroke-dasharray="2 2" stroke-width="0.75"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid-pattern)" height="100%" width="100%"></rect>
+<!-- 视口中心靶向圆环 -->
+<circle cx="50%" cy="50%" fill="none" r="90" stroke="#2563EB" stroke-dasharray="4 4" stroke-opacity="0.25" stroke-width="1"></circle>
+<circle cx="50%" cy="50%" fill="none" r="140" stroke="#2563EB" stroke-opacity="0.12" stroke-width="1"></circle>
+</svg>
+<!-- 3D 传感器模块外壳：银白磨砂金属质感盒子 -->
+<div class="relative w-44 h-24 transition-transform duration-300 ease-out [transform-style:preserve-3d]" id="imu-cube" style="transform: rotateX(14deg) rotateY(-4deg) rotateZ(128deg);">
+<!-- 前面 -->
+<div class="absolute inset-0 bg-gradient-to-tr from-surface-container-lowest to-surface-variant rounded-sm flex flex-col p-2.5 shadow-xl [transform:translateZ(26px)]">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-[9px] text-primary font-bold tracking-widest">IMU-6DOF</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+</div>
+<!-- 芯片仿真丝印与物理引脚 -->
+<div class="my-auto mx-auto w-20 h-11 bg-surface-container-lowest rounded shadow-sm flex flex-col items-center justify-center">
+<span class="font-label-caps text-[8px] text-on-surface-variant font-bold">MEMS SENSOR</span>
+<span class="font-telemetry-readout text-[9px] text-primary font-bold">LSM6DSOX</span>
+</div>
+<div class="flex items-center justify-between font-label-caps text-[8px] text-outline font-semibold">
+<span>ORIGIN: (0,0,0)</span>
+<span>CALIBRATED</span>
+</div>
+</div>
+<!-- 后面 -->
+<div class="absolute inset-0 bg-surface-container-high rounded-sm [transform:rotateY(180deg)_translateZ(26px)]"></div>
+<!-- 左侧面 -->
+<div class="absolute inset-y-0 left-0 w-[52px] bg-surface-container rounded-sm origin-left [transform:rotateY(-90deg)]"></div>
+<!-- 右侧面 -->
+<div class="absolute inset-y-0 right-0 w-[52px] bg-surface-container-highest rounded-sm origin-right [transform:rotateY(90deg)]"></div>
+<!-- 顶面 -->
+<div class="absolute inset-x-0 top-0 h-[52px] bg-surface-container-low rounded-sm origin-top [transform:rotateX(90deg)]"></div>
+<!-- 底面 -->
+<div class="absolute inset-x-0 bottom-0 h-[52px] bg-surface-dim rounded-sm origin-bottom [transform:rotateX(-90deg)]"></div>
+<!-- 物理坐标箭头指示器 (XYZ) -->
+<!-- +X 轴 (红) -->
+<div class="absolute top-1/2 left-1/2 w-28 h-0.5 bg-[#EF4444] origin-left [transform:translateZ(26px)] pointer-events-none flex items-center justify-end">
+<span class="font-label-caps text-[10px] text-[#EF4444] font-black -mt-4 pr-1">+X (Pitch)</span>
+<div class="w-2 h-2 bg-[#EF4444] rotate-45 -mr-1"></div>
+</div>
+<!-- +Y 轴 (绿) -->
+<div class="absolute top-1/2 left-1/2 w-28 h-0.5 bg-[#10B981] origin-left [transform:translateZ(26px)_rotateZ(90deg)] pointer-events-none flex items-center justify-end">
+<span class="font-label-caps text-[10px] text-[#10B981] font-black -mt-4 pr-1">+Y (Roll)</span>
+<div class="w-2 h-2 bg-[#10B981] rotate-45 -mr-1"></div>
+</div>
+<!-- +Z 轴 (蓝) -->
+<div class="absolute top-1/2 left-1/2 w-28 h-0.5 bg-[#2563EB] origin-left [transform:translateZ(26px)_rotateY(-90deg)] pointer-events-none flex items-center justify-end">
+<span class="font-label-caps text-[10px] text-[#2563EB] font-black -mt-4 pr-1">+Z (Yaw)</span>
+<div class="w-2 h-2 bg-[#2563EB] rotate-45 -mr-1"></div>
+</div>
+</div>
+<!-- 3D 浮动指示标 -->
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 px-space-sm py-1 rounded shadow-sm text-on-surface-variant font-label-caps text-[10px] flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>三维姿态姿势同步解算</span>
+</div>
+</div>
+<!-- 底部状态注脚 -->
+<div class="px-space-md py-space-xs bg-surface-container-low flex flex-wrap items-center justify-between font-label-caps text-label-caps text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<span class="font-semibold text-tertiary">姿态同步率: 99.4%</span>
+<span>•</span>
+<span>解算引擎: Quaternion (AHRS 滤波)</span>
+</div>
+<div class="font-telemetry-readout text-[11px] text-on-surface font-medium tabular-nums">
+            观察角: Pitch: +14.2° / Roll: -3.8° / Yaw: +128.4°
+          </div>
+</div>
+</div>
+<!-- 右侧：姿态角读数与关键设备标记面板 (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- 三大精密等宽数字度数卡片 -->
+<div class="grid grid-cols-3 gap-space-sm">
+<!-- Roll 卡片 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#ECFDF5] text-[#10B981]">ROLL / 横滚</span>
+<span class="text-outline font-label-caps text-[10px]">Φ</span>
+</div>
+<div class="my-space-sm flex flex-col">
+<div class="flex items-baseline gap-0.5">
+<span class="font-telemetry-display-xl text-[28px] xl:text-telemetry-display-xl text-on-surface font-bold tabular-nums tracking-tighter" id="val-roll">-3.82</span>
+<span class="font-telemetry-readout text-on-surface-variant text-body-sm font-semibold">°</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline">水平倾角检测</span>
+</div>
+<!-- 微型倾角刻度线图示 -->
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden relative">
+<div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-outline"></div>
+<div class="absolute left-[44%] top-0.5 bottom-0.5 w-3 bg-[#10B981] rounded-full"></div>
+</div>
+</div>
+<!-- Pitch 卡片 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#FFF7ED] text-[#F97316]">PITCH / 俯仰</span>
+<span class="text-outline font-label-caps text-[10px]">θ</span>
+</div>
+<div class="my-space-sm flex flex-col">
+<div class="flex items-baseline gap-0.5">
+<span class="font-telemetry-display-xl text-[28px] xl:text-telemetry-display-xl text-on-surface font-bold tabular-nums tracking-tighter" id="val-pitch">+14.25</span>
+<span class="font-telemetry-readout text-on-surface-variant text-body-sm font-semibold">°</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline">前后俯仰梯度</span>
+</div>
+<!-- 垂直微型进度指示 -->
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden relative">
+<div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-outline"></div>
+<div class="absolute left-[62%] top-0.5 bottom-0.5 w-3 bg-[#F97316] rounded-full"></div>
+</div>
+</div>
+<!-- Yaw 卡片 -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#F0F9FF] text-[#0284C7]">YAW / 航向</span>
+<span class="text-outline font-label-caps text-[10px]">Ψ</span>
+</div>
+<div class="my-space-sm flex flex-col">
+<div class="flex items-baseline gap-0.5">
+<span class="font-telemetry-display-xl text-[28px] xl:text-telemetry-display-xl text-on-surface font-bold tabular-nums tracking-tighter" id="val-yaw">128.40</span>
+<span class="font-telemetry-readout text-on-surface-variant text-body-sm font-semibold">°</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline">罗盘方位角 (SE)</span>
+</div>
+<!-- 罗盘指向方位微指示条 -->
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden relative">
+<div class="absolute left-[35%] top-0.5 bottom-0.5 w-3 bg-[#0284C7] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- 关键设备标记指示栏 (Device Health & Posture Flags) -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm flex-1 justify-between">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-headline-md text-[13px] uppercase tracking-wider font-semibold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+              端侧状态诊断标记 · DIAGNOSTIC FLAGS
+            </span>
+<span class="font-label-caps text-label-caps text-outline">IMU FIRMWARE V1.2</span>
+</div>
+<!-- 标记列表项 -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<!-- 久坐状态标记 -->
+<div class="bg-surface-container-low p-space-sm rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-surface-container-lowest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">airline_seat_recline_normal</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">久坐判定标记</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">未检测到久坐</span>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-surface-container rounded font-telemetry-readout text-body-sm font-bold text-secondary">VAL: 0</span>
+</div>
+<!-- 摔倒状态标记 -->
+<div class="bg-surface-container-low p-space-sm rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-[#ECFDF5] flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">personal_injury</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant">异常姿态/摔倒</span>
+<span class="font-body-md text-body-md font-semibold text-tertiary">未检测到摔倒</span>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-[#ECFDF5] text-tertiary rounded font-telemetry-readout text-body-sm font-bold">VAL: 0</span>
+</div>
+</div>
+<!-- 增量步数指示与跳转说明区 -->
+<div class="bg-surface-container-low p-space-md rounded flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">本次有效步数增量</span>
+<div class="flex items-baseline gap-1">
+<span class="font-telemetry-display-lg text-telemetry-display-lg text-primary font-bold tabular-nums">+2</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">步</span>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/40 hidden sm:block"></div>
+<p class="font-body-sm text-[11px] text-on-surface-variant max-w-[210px] leading-tight">
+                * 该值系设备最新一次遥测数据包增量，非全天总步数。
+              </p>
+</div>
+<a class="flex items-center justify-center gap-1 text-primary hover:text-primary-container font-body-md text-body-md font-semibold group flex-shrink-0" data-path="history-steps" href="#">
+<span>查看今日全部设备合计历史步数</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. 核心下半区：六轴波形曲线分析工作区 (Waveform Oscilloscope) -->
+<section class="w-full bg-surface-container-lowest rounded-lg shadow-sm overflow-hidden flex flex-col">
+<!-- 示波器顶部筛选栏 -->
+<div class="p-space-md bg-surface-container-low flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<!-- 左侧工具组：数据类型 / 窗口 / 滤波模式 -->
+<div class="flex flex-wrap items-center gap-space-md">
+<!-- 数据类型切换 -->
+<div class="flex items-center bg-surface-container-lowest p-0.5 rounded shadow-sm">
+<button class="px-space-md py-1 rounded text-body-md font-semibold bg-primary text-on-primary shadow-sm transition-all" id="type-accel" type="button">
+              加速度 Acceleration (m/s²)
+            </button>
+<button class="px-space-md py-1 rounded text-body-md font-medium text-on-surface-variant hover:text-on-surface transition-all" id="type-gyro" type="button">
+              角速度 Angular Velocity (°/s)
+            </button>
+</div>
+<!-- 时间窗口切换 -->
+<div class="flex items-center gap-1 bg-surface-container-lowest p-0.5 rounded shadow-sm">
+<span class="font-label-caps text-label-caps text-outline px-2">WINDOW:</span>
+<button class="px-2 py-1 rounded text-body-sm text-on-surface-variant hover:text-on-surface">30s</button>
+<button class="px-2.5 py-1 rounded text-body-sm font-semibold bg-surface-container text-primary">60s (默认)</button>
+<button class="px-2 py-1 rounded text-body-sm text-on-surface-variant hover:text-on-surface">120s</button>
+<button class="px-2 py-1 rounded text-body-sm text-on-surface-variant hover:text-on-surface">300s</button>
+</div>
+<!-- 滤波模式 -->
+<div class="flex items-center gap-1.5 bg-surface-container-lowest px-space-sm py-1 rounded shadow-sm">
+<span class="font-label-caps text-label-caps text-outline">FILTER:</span>
+<button class="px-2 py-0.5 rounded text-body-sm font-semibold bg-surface-container text-primary" id="filter-raw">原始数据 (Raw)</button>
+<button class="px-2 py-0.5 rounded text-body-sm text-on-surface-variant hover:text-on-surface" id="filter-sma">滑动平均滤波 (SMA)</button>
+<!-- SMA 样本数滑块 (默认低调提示，选中时生效) -->
+<div class="hidden items-center gap-2 pl-2" id="sma-slider-container">
+<span class="font-label-caps text-[10px] text-on-surface-variant">样本数:</span>
+<input class="w-16 h-1 bg-outline-variant rounded appearance-none cursor-pointer accent-primary" max="25" min="3" type="range" value="5"/>
+<span class="font-telemetry-readout text-body-sm font-bold text-primary">5</span>
+</div>
+</div>
+</div>
+<!-- 右侧图例与实时读数 -->
+<div class="flex items-center gap-space-lg flex-wrap">
+<!-- X 轴 -->
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-1 bg-[#EF4444] rounded-sm"></span>
+<span class="font-label-caps text-label-caps font-bold text-[#EF4444]">X-AXIS</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-on-surface tabular-nums" id="osc-val-x">+0.24</span>
+<span class="text-body-sm text-outline font-normal">m/s²</span>
+</div>
+<!-- Y 轴 -->
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-1 bg-[#10B981] rounded-sm"></span>
+<span class="font-label-caps text-label-caps font-bold text-[#10B981]">Y-AXIS</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-on-surface tabular-nums" id="osc-val-y">-0.12</span>
+<span class="text-body-sm text-outline font-normal">m/s²</span>
+</div>
+<!-- Z 轴 -->
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-1 bg-[#2563EB] rounded-sm"></span>
+<span class="font-label-caps text-label-caps font-bold text-[#2563EB]">Z-AXIS</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-on-surface tabular-nums" id="osc-val-z">+9.78</span>
+<span class="text-body-sm text-outline font-normal">m/s²</span>
+<span class="text-[10px] text-outline font-label-caps bg-surface-container px-1 py-0.5 rounded">(含重力分量)</span>
+</div>
+</div>
+</div>
+<!-- 示波器波形画布容器 (Precision Chart Canvas) -->
+<div class="relative w-full h-[280px] bg-[#F8FAFC] overflow-hidden">
+<!-- Y轴刻度指示尺 (左侧绝对定位) -->
+<div class="absolute left-0 top-0 bottom-6 w-14 bg-surface-container-lowest/80 flex flex-col justify-between items-end pr-2 py-2 font-telemetry-readout text-[10px] text-outline z-10">
+<span>+12.0</span>
+<span>+9.8</span>
+<span>+6.0</span>
+<span>0.0</span>
+<span>-6.0</span>
+<span>-12.0</span>
+</div>
+<!-- 刻度与水平网格线 SVG -->
+<svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<!-- 静态水平刻度基线 -->
+<line stroke="#E2E8F0" stroke-width="1" x1="56" x2="100%" y1="20" y2="20"></line>
+<line stroke="#E2E8F0" stroke-dasharray="4 2" stroke-width="1" x1="56" x2="100%" y1="68" y2="68"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="56" x2="100%" y1="116" y2="116"></line>
+<line stroke="#94A3B8" stroke-dasharray="2 2" stroke-width="1.25" x1="56" x2="100%" y1="164" y2="164"></line> <!-- 0零位中轴 -->
+<line stroke="#E2E8F0" stroke-dasharray="4 2" stroke-width="1" x1="56" x2="100%" y1="212" y2="212"></line>
+<line stroke="#E2E8F0" stroke-width="1" x1="56" x2="100%" y1="256" y2="256"></line>
+<!-- 垂直时间参考网格 -->
+<line stroke="#F1F5F9" stroke-width="1" x1="16%" x2="16%" y1="0" y2="256"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="33%" x2="33%" y1="0" y2="256"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="50%" x2="50%" y1="0" y2="256"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="67%" x2="67%" y1="0" y2="256"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="84%" x2="84%" y1="0" y2="256"></line>
+<!-- Z 轴曲线 (围绕 +9.8m/s² 波动，高亮蓝色) -->
+<path d="M 56 68 Q 120 62, 190 70 T 320 66 T 450 74 T 580 64 T 710 69 T 840 65 T 970 71 T 1100 66 T 1250 67 T 1400 69 L 1600 68" fill="none" stroke="#2563EB" stroke-linecap="round" stroke-width="2"></path>
+<!-- X 轴曲线 (围绕 0m/s² 弱抖动，珊瑚红) -->
+<path d="M 56 160 Q 140 152, 220 166 T 380 158 T 520 164 T 680 155 T 820 167 T 960 160 T 1120 162 T 1280 159 T 1440 163 L 1600 161" fill="none" stroke="#EF4444" stroke-linecap="round" stroke-width="1.75"></path>
+<!-- Y 轴曲线 (围绕 0m/s² 弱反相抖动，翠绿) -->
+<path d="M 56 168 Q 130 174, 210 162 T 370 170 T 510 162 T 670 172 T 810 161 T 950 169 T 1110 165 T 1270 169 T 1430 166 L 1600 167" fill="none" stroke="#10B981" stroke-linecap="round" stroke-width="1.75"></path>
+<!-- 模拟悬停指示十字垂直线 (Hover Crosshair) -->
+<line opacity="0.6" stroke="#0F172A" stroke-dasharray="3 3" stroke-width="1" x1="720" x2="720" y1="0" y2="256"></line>
+<!-- 悬停指示锚点 -->
+<circle cx="720" cy="69" fill="#2563EB" r="4" stroke="#FFFFFF" stroke-width="2"></circle>
+<circle cx="720" cy="157" fill="#EF4444" r="3.5" stroke="#FFFFFF" stroke-width="1.5"></circle>
+<circle cx="720" cy="170" fill="#10B981" r="3.5" stroke="#FFFFFF" stroke-width="1.5"></circle>
+</svg>
+<!-- 悬停数据指标 Tooltip 浮窗 -->
+<div class="absolute left-[735px] top-6 bg-surface-container-lowest/95 p-2 rounded shadow-lg pointer-events-none z-20 flex flex-col gap-1 w-44">
+<div class="font-telemetry-readout text-[10px] text-outline font-semibold pb-1 border-b border-surface-container">
+            T: 15:42:04.200 (OFFSET -15.6s)
+          </div>
+<div class="flex items-center justify-between font-label-caps text-[10px]">
+<span class="text-[#EF4444] font-bold">X-RAW:</span>
+<span class="font-telemetry-readout font-bold text-on-surface">+0.19 m/s²</span>
+</div>
+<div class="flex items-center justify-between font-label-caps text-[10px]">
+<span class="text-[#10B981] font-bold">Y-RAW:</span>
+<span class="font-telemetry-readout font-bold text-on-surface">-0.28 m/s²</span>
+</div>
+<div class="flex items-center justify-between font-label-caps text-[10px]">
+<span class="text-[#2563EB] font-bold">Z-RAW:</span>
+<span class="font-telemetry-readout font-bold text-on-surface">+9.84 m/s²</span>
+</div>
+</div>
+<!-- 局部数据断点/无缺失说明角注 -->
+<div class="absolute right-3 bottom-8 bg-surface-container-low/90 px-2 py-1 rounded text-outline font-label-caps text-[10px] flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[13px] text-tertiary">check_circle</span>
+<span>波形完整性: 100% · 未检测到丢包空样本 (NaN)</span>
+</div>
+<!-- 时间轴标注 (过去 60 秒递进时间戳) -->
+<div class="absolute left-14 right-0 bottom-0 h-6 bg-surface-container-low flex items-center justify-between px-4 font-telemetry-readout text-[11px] text-outline">
+<span>15:41:20 (-60s)</span>
+<span>15:41:35 (-45s)</span>
+<span>15:41:50 (-30s)</span>
+<span>15:42:05 (-15s)</span>
+<span class="text-primary font-bold">15:42:20 (NOW)</span>
+</div>
+</div>
+</section>
+<!-- 4. 底部折叠式：原始窗口统计分析 (Summary Statistics based on Raw Data) -->
+<section class="w-full bg-surface-container-lowest rounded-lg shadow-sm overflow-hidden">
+<!-- 可折叠标题栏 -->
+<button class="w-full h-11 px-space-md bg-surface-container-low flex items-center justify-between hover:bg-surface-container transition-colors" id="btn-toggle-stats" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">query_stats</span>
+<span class="font-headline-md text-[13px] uppercase tracking-wider font-semibold text-on-surface">窗口遥测统计数据 · SUMMARY STATISTICS</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant font-normal">（基于当前 60s 原始数据计算 · 空窗口显示“—”）</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="font-label-caps text-[11px]">收起 / 展开</span>
+<span class="material-symbols-outlined text-[18px] transition-transform" id="stats-icon">expand_less</span>
+</div>
+</button>
+<!-- 统计内容面板 -->
+<div class="p-space-md grid grid-cols-1 md:grid-cols-3 gap-space-md" id="stats-content">
+<!-- X 轴统计卡片 -->
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#FFF7ED] text-[#EF4444]">X 轴统计 (加速度)</span>
+<span class="font-label-caps text-[10px] text-outline">N = 600 SAMPLES</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最小值 (MIN)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">-0.85 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最大值 (MAX)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+1.42 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">算术平均值 (AVG)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+0.18 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">波动幅度 (P-P)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-[#EF4444] tabular-nums">2.27 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+</div>
+</div>
+<!-- Y 轴统计卡片 -->
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#ECFDF5] text-[#10B981]">Y 轴统计 (加速度)</span>
+<span class="font-label-caps text-[10px] text-outline">N = 600 SAMPLES</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最小值 (MIN)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">-1.12 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最大值 (MAX)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+0.94 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">算术平均值 (AVG)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">-0.08 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">波动幅度 (P-P)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-[#10B981] tabular-nums">2.06 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+</div>
+</div>
+<!-- Z 轴统计卡片 -->
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps font-bold bg-[#F0F9FF] text-[#2563EB]">Z 轴统计 (含重力)</span>
+<span class="font-label-caps text-[10px] text-outline">N = 600 SAMPLES</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最小值 (MIN)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+8.92 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">最大值 (MAX)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+10.45 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">算术平均值 (AVG)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-semibold text-on-surface tabular-nums">+9.81 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-outline">波动幅度 (P-P)</span>
+<span class="font-telemetry-readout text-telemetry-readout font-bold text-[#2563EB] tabular-nums">1.53 <span class="text-[10px] text-outline font-normal">m/s²</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- 页面交互轻量脚本 -->
+<script>
+    (function initTelemetryConsole() {
+      // 1. 折叠面板逻辑
+      const statsToggleBtn = document.getElementById('btn-toggle-stats');
+      const statsContent = document.getElementById('stats-content');
+      const statsIcon = document.getElementById('stats-icon');
+      
+      if (statsToggleBtn && statsContent && statsIcon) {
+        statsToggleBtn.addEventListener('click', () => {
+          const isCollapsed = statsContent.classList.toggle('hidden');
+          statsIcon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+      }
+
+      // 2. 演示数据切换开关
+      const demoToggle = document.getElementById('demo-toggle');
+      const demoKnob = document.getElementById('demo-knob');
+      let isDemoActive = false;
+
+      if (demoToggle && demoKnob) {
+        demoToggle.addEventListener('click', () => {
+          isDemoActive = !isDemoActive;
+          demoToggle.setAttribute('aria-checked', isDemoActive ? 'true' : 'false');
+          if (isDemoActive) {
+            demoToggle.classList.remove('bg-secondary-container');
+            demoToggle.classList.add('bg-primary');
+            demoKnob.style.transform = 'translateX(14px)';
+          } else {
+            demoToggle.classList.remove('bg-primary');
+            demoToggle.classList.add('bg-secondary-container');
+            demoKnob.style.transform = 'translateX(0px)';
+          }
+        });
+      }
+
+      // 3. 示波器滤波模式切换
+      const filterRaw = document.getElementById('filter-raw');
+      const filterSma = document.getElementById('filter-sma');
+      const smaSliderContainer = document.getElementById('sma-slider-container');
+
+      if (filterRaw && filterSma && smaSliderContainer) {
+        filterRaw.addEventListener('click', () => {
+          filterRaw.className = "px-2 py-0.5 rounded text-body-sm font-semibold bg-surface-container text-primary";
+          filterSma.className = "px-2 py-0.5 rounded text-body-sm text-on-surface-variant hover:text-on-surface";
+          smaSliderContainer.classList.add('hidden');
+          smaSliderContainer.classList.remove('flex');
+        });
+
+        filterSma.addEventListener('click', () => {
+          filterSma.className = "px-2 py-0.5 rounded text-body-sm font-semibold bg-surface-container text-primary";
+          filterRaw.className = "px-2 py-0.5 rounded text-body-sm text-on-surface-variant hover:text-on-surface";
+          smaSliderContainer.classList.remove('hidden');
+          smaSliderContainer.classList.add('flex');
+        });
+      }
+
+      // 4. 加速度/角速度类型切换
+      const btnAccel = document.getElementById('type-accel');
+      const btnGyro = document.getElementById('type-gyro');
+      const valX = document.getElementById('osc-val-x');
+      const valY = document.getElementById('osc-val-y');
+      const valZ = document.getElementById('osc-val-z');
+
+      if (btnAccel && btnGyro) {
+        btnAccel.addEventListener('click', () => {
+          btnAccel.className = "px-space-md py-1 rounded text-body-md font-semibold bg-primary text-on-primary shadow-sm transition-all";
+          btnGyro.className = "px-space-md py-1 rounded text-body-md font-medium text-on-surface-variant hover:text-on-surface transition-all";
+          if (valX && valY && valZ) {
+            valX.textContent = "+0.24";
+            valY.textContent = "-0.12";
+            valZ.textContent = "+9.78";
+          }
+        });
+
+        btnGyro.addEventListener('click', () => {
+          btnGyro.className = "px-space-md py-1 rounded text-body-md font-semibold bg-primary text-on-primary shadow-sm transition-all";
+          btnAccel.className = "px-space-md py-1 rounded text-body-md font-medium text-on-surface-variant hover:text-on-surface transition-all";
+          if (valX && valY && valZ) {
+            valX.textContent = "-1.45";
+            valY.textContent = "+0.82";
+            valZ.textContent = "+0.03";
+          }
+        });
+      }
+
+      // 5. 3D 模型微动动画模拟
+      const imuCube = document.getElementById('imu-cube');
+      const resetViewBtn = document.getElementById('btn-reset-view');
+      if (imuCube && resetViewBtn) {
+        resetViewBtn.addEventListener('click', () => {
+          imuCube.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+          setTimeout(() => {
+            imuCube.style.transform = 'rotateX(14deg) rotateY(-4deg) rotateZ(128deg)';
+          }, 1200);
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low/70 py-space-md mt-auto"><div class="w-full px-margin-desktop flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-caps text-label-caps text-on-surface-variant"><div class="flex items-center gap-space-md"><span>TELEMETRY CHANNEL: 6-DOF IMU BUS #01</span><span class="hidden sm:inline">•</span><span class="hidden sm:inline">FREQUENCY: 100HZ SYNCHRONIZED</span><span class="hidden md:inline">•</span><span class="hidden md:inline">CHASSIS REF: MIL-STD-810G</span></div><div class="flex items-center gap-space-sm font-body-sm text-body-sm text-outline"><span>© 2025 SIX-AXIS IMU LABORATORY. ALL TELEMETRY CHANNELS ACTIVE.</span></div></div></footer></body></html>

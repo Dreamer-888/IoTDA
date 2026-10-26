@@ -1,0 +1,38 @@
+{
+  "resource": "device.property",
+  "event": "report",
+  "event_time": "20261012T034018Z",
+  "event_time_ms": "2026-10-12T03:40:18.976Z",
+  "request_id": "f02a173e-8b74-43a0-8b7c-df9a717419f2",
+  "notify_data": {
+    "header": {
+      "app_id": "e6d322180bf742afb765ac05f5b296ab",
+      "device_id": "6ab50bab4e7fed229661d66e_24D7EBEF0B50",
+      "node_id": "24D7EBEF0B50",
+      "product_id": "6ab50bab4e7fed229661d66e",
+      "gateway_id": "6ab50bab4e7fed229661d66e_24D7EBEF0B50"
+    },
+    "body": {
+      "services": [
+        {
+          "service_id": "six_axis",
+          "properties": {
+            "accel_x": -0.18,
+            "accel_y": 8.65,
+            "accel_z": 4.48,
+            "gyro_x": 0.0,
+            "gyro_y": 0.0,
+            "gyro_z": -0.0,
+            "roll": 62.73,
+            "pitch": 1.08,
+            "yaw": -48.14,
+            "step_increment": 0,
+            "is_sedentary": 0,
+            "is_fall": 0
+          },
+          "event_time": "20261012T034018Z"
+        }
+      ]
+    }
+  }
+}

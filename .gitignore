@@ -1,0 +1,83 @@
+# 本地配置和凭据；配置示例可以提交
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+!.env.*.example
+*.key
+*.pem
+*.p12
+*.pfx
+/secrets/
+
+# Python 虚拟环境、字节码和构建产物
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+.eggs/
+*.egg-info/
+build/
+dist/
+
+# 测试、覆盖率和代码检查缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage/
+coverage.xml
+htmlcov/
+
+# Node.js 依赖、包管理器和 Vite 缓存；保留 package-lock.json
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.vite/
+.vite-temp/
+*.tsbuildinfo
+
+# 本机日志、步数及告警工作数据、InfluxDB 安装和运行目录
+/logs/
+*.log
+*.log.*
+/data/
+/influxdb/
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+
+# 数据库备份；保留 mysql_schema.sql 和 migrations/*.sql
+/backup/
+/backups/
+*.sql.gz
+*.sql.bz2
+*.sql.xz
+*.sql.zst
+*.sql.zip
+*.dump
+
+# 本机工具配置、编辑器和操作系统临时文件
+/.aws/
+/.codex/
+/.agents/
+.idea/
+.vscode/
+.cache/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
